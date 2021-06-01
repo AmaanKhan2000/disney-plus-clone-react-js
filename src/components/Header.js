@@ -4,7 +4,7 @@ import { useDispatch , useSelector } from 'react-redux';
 
 import {useHistory} from 'react-router-dom';
 
-import {selectUserName, setUserLoginDetails, selectUserPhoto} from '../features/user/userSlice'
+import {selectUserName, setUserLoginDetails, selectUserPhoto, setSignOutState} from '../features/user/userSlice'
 
 import {auth, provider} from '../firebase.js'
 
@@ -18,12 +18,22 @@ const Header = (props) =>{
   const userphoto = useSelector(selectUserPhoto);
 
   const handleAuth = () =>{
+    if(!username){
     auth.signInWithPopup(provider).then((result)=>{
       setUser(result.user)
     })
     .catch((error)=>{
       console.log(error.message)
     })
+  }
+  else if(username){
+    auth.signOut().then(()=>{
+      dispatch(setSignOutState());
+      history.push('/')
+    }).catch((err)=>{
+      alert(err.message)
+    })
+  }
   };
 
   useEffect(() => {
@@ -82,7 +92,13 @@ const Header = (props) =>{
         <span>SERIES</span>
       </a>
     </NavMenu>
+    <SignOut>
     <UserImg src={userphoto}  />
+    <Dropdown>
+      <span onClick={handleAuth}>Sign Out</span>
+    </Dropdown>
+    </SignOut>
+    
     </>
     }
   </Nav>
@@ -199,9 +215,49 @@ transition: 200ms ease-out;
 `
 
 const UserImg = styled.img`
-height: 70%;
-border-radius: 50%;
+height: 100%;
 `
+
+
+
+const Dropdown = styled.div`
+position: absolute;
+top: 68px;
+right: 50px;
+background-color: rgb(19,19,19);
+border: 1px solid rgb(151,151,151,0.34);
+border-radius: 5px;
+box-shadow: rgb(0 0 0 /50%) 0px 0px;
+padding: 10px;
+letter-spacing: 2px;
+opacity: 0;
+
+
+  &:hover {
+    background-color: #fff;
+    color: rgb(19,19,19);
+    cursor: pointer;
+    transition: ease-in 200ms;
+  }
+`;
+
+const SignOut = styled.div`
+height: 48px;
+width: 48px;
+ ${UserImg}{
+   border-radius: 50%;
+ }
+ display: flex;
+ justify-content: center;
+ align-items: center; 
+ &:hover{
+  ${Dropdown}{
+   opacity: 1;
+   transition: ease-in 200ms;
+ }
+ }
+
+`;
 
 
 export default Header;
