@@ -222,8 +222,8 @@ height: 100%;
 
 const Dropdown = styled.div`
 position: absolute;
-top: 68px;
-right: 50px;
+top: 15px;
+right: 100px;
 background-color: rgb(19,19,19);
 border: 1px solid rgb(151,151,151,0.34);
 border-radius: 5px;
