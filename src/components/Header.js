@@ -8,6 +8,8 @@ import {selectUserName, setUserLoginDetails, selectUserPhoto} from '../features/
 
 import {auth, provider} from '../firebase.js'
 
+import {useEffect} from 'react';
+
 const Header = (props) =>{
 
   const dispatch = useDispatch();
@@ -23,6 +25,18 @@ const Header = (props) =>{
       console.log(error.message)
     })
   };
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async(user)=>{
+      if(user) {
+        setUser(user)
+        history.push('/home')
+      }
+    })
+
+  }, [username])
+
+
 
   const setUser = (user) =>{
     dispatch(setUserLoginDetails({
