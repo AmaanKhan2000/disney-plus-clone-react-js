@@ -3,6 +3,7 @@ import Login from './components/Login'
 import Header from './components/Header'
 import './App.css';
 import Home from './components/Home';
+import Details from './components/Detail';
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
         <Route path ='/home'>
           <Home />
         </Route>
+        <Route path ='//details/:id'>
+          <Details />
+n       </Route>
       </Switch>
     </Router>
   );
