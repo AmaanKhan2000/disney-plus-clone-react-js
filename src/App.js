@@ -3,7 +3,7 @@ import Login from './components/Login'
 import Header from './components/Header'
 import './App.css';
 import Home from './components/Home';
-import Details from './components/Detail';
+import Details from './components/Details';
 
 function App() {
   return (
@@ -16,9 +16,9 @@ function App() {
         <Route path ='/home'>
           <Home />
         </Route>
-        <Route path ='//details/:id'>
+        <Route path ='/detail/:id'>
           <Details />
-n       </Route>
+       </Route>
       </Switch>
     </Router>
   );
